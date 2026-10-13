@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
       <div class="p-6">
         <div class="flex justify-between items-center mt-4">
           <!-- TODO Mod 1: Add Date using DatePipe -->
-          <p class="text-sm text-blue-600 font-semibold mb-2">TBA</p>
+          <p class="text-sm text-blue-600 font-semibold mb-2">TBA 2</p>
 
           <!-- TODO Mod 1: Add daysUntil() using @let -->
           <div
