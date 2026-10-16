@@ -15,9 +15,15 @@ import { EventCard } from './event-card';
       <!-- TODO Mod 2: Use @for to iterate over resource -->
 
       <!-- Static Placeholders for initial verify -->
-      <app-event-card />
-      <app-event-card />
-      <app-event-card />
+       <!-- from this parent component we are passing image and date value to app-event-card -->
+      <app-event-card title = "Angular Keynote" 
+      image="/images/angular-keynote.png" 
+      date="2024-06-15" />
+
+      <app-event-card title = "Signals Deep Dive" 
+      image="/images/signals-deep-dive.png" 
+      date="2024-07-20" />
+      <!-- <app-event-card /> -->
     </div>
   `,
 })

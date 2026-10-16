@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-event-card',
@@ -6,7 +6,15 @@ import { Component } from '@angular/core';
     <div
       class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
     >
-      <!-- TODO: Add Image -->
+      <!--Add Image -->
+       <div class="relative h-48 w-full bg-gray-200">
+        <!-- we are using the input() function to get the image URL. You pass the name of your input here image
+         and call it like a function since its a signal. You use square brackets to specify the binding for input as in data coming from the parent component -->
+    <img [src]="image()"
+      class="object-cover w-full h-full max-h-full max-w-full"
+      alt="Event thumbnail"
+    />
+  </div>
 
       <div class="p-6">
         <div class="flex justify-between items-center mt-4">
@@ -19,8 +27,8 @@ import { Component } from '@angular/core';
           ></div>
         </div>
 
-        <!-- TODO Mod 1: Add Title Input -->
-        <h3 class="text-xl font-bold text-gray-800 my-2">Title Placeholder</h3>
+        <!-- Add Title Input -->
+        <h3 class="text-xl font-bold text-gray-800 my-2"> {{ title() }}</h3>
 
         <div class="flex justify-between items-center mt-4">
           <!-- TODO Mod 1: Add Derived State (Like Button) -->
@@ -41,4 +49,9 @@ import { Component } from '@angular/core';
 })
 export class EventCard {
   // TODO Mod 1: Implement input(), output(), and model()
+  // below is newer way to define inputs instead of using @Input() decorator
+  title = input.required<string>();
+  image = input.required<string>();
+  date = input<string>(); // optional
+
 }
