@@ -22,7 +22,7 @@ import { EventCard } from './event-card';
 
       <app-event-card title = "Signals Deep Dive" 
       image="/images/signals-deep-dive.png" 
-      date="2024-07-20" />
+      date="2026-10-20" />
       <!-- <app-event-card /> -->
     </div>
   `,

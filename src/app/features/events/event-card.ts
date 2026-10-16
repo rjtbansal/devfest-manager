@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-event-card',
@@ -21,11 +21,26 @@ import { Component, input } from '@angular/core';
           <!-- TODO Mod 1: Add Date using DatePipe -->
           <p class="text-sm text-blue-600 font-semibold mb-2">TBA 2</p>
 
-          <!-- TODO Mod 1: Add daysUntil() using @let -->
+          <!-- Add daysUntil() using @let -->
+           <!-- @let allows you to create a local variable that tracks the state of a signal -->
+           @let days = daysUntil();
+           <!-- @if allows you to conditionally render a block of code based on the value of a signal -->           
+          @if (days != null) {
           <div
             class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm"
-          ></div>
-        </div>
+          >
+            @if (days > 0) {
+              In {{ days }} Days
+            } 
+            @else if (days < 0) {
+              Past Event
+            } 
+            @else {
+              Happening Now
+            }
+          </div>
+        }
+      </div>
 
         <!-- Add Title Input -->
         <h3 class="text-xl font-bold text-gray-800 my-2"> {{ title() }}</h3>
@@ -53,5 +68,18 @@ export class EventCard {
   title = input.required<string>();
   image = input.required<string>();
   date = input<string>(); // optional
+
+    // computed allows you to create a derived state that automatically updates when its dependencies change. In this case, we are creating a computed signal that calculates the number of days until the event based on the date input signal.
+  daysUntil = computed(() => {
+    const eventDate = this.date();
+    if(!eventDate) return null;
+
+    const today = new Date();
+    const target = new Date(eventDate);
+
+    const diffTime = target.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+});
 
 }
