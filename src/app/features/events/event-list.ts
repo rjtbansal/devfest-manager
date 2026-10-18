@@ -19,15 +19,22 @@ import { EventCard } from './event-card';
       <app-event-card title = "Angular Keynote" 
       image="/images/angular-keynote.png" 
       date="2024-06-15"
+      (delete)="console.log('Removed clicked')"
        />
 
       <app-event-card title = "Signals Deep Dive" 
       image="/images/signals-deep-dive.png" 
-      date="2026-10-20" />
+      date="2026-10-20"
+      (delete)="console.log('Removed clicked')"
+       />
       <!-- <app-event-card /> -->
     </div>
   `,
 })
 export class EventList {
   // TODO Mod 2: Inject Service and use resource()
+
+  // aliasing console this way allows us to use console logs in the template
+  // this is also a common practice to make enums and other static values available in the template
+  readonly console = console;
 }
