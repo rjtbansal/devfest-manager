@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, linkedSignal } from '@angular/core';
 
 @Component({
   selector: 'app-event-card',
@@ -47,8 +47,14 @@ import { Component, computed, input } from '@angular/core';
 
         <div class="flex justify-between items-center mt-4">
           <!-- TODO Mod 1: Add Derived State (Like Button) -->
-          <button class="text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
-            ♡ Like
+           <!-- we are calling toggleFavorite on click and updating the isFavorite state
+           We are also using the isFavorite() signal to conditionally apply a CSS class to change the color of the button when it is liked. 
+           -->
+          <button 
+          (click)="toggleFavorite()" 
+          [class.text-red-500]="isFavorite()"
+          class="text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
+             {{ isFavorite() ? '❤️' : '🤍' }} Like
           </button>
 
           <!-- TODO Mod 1: Add Output -->
@@ -69,6 +75,16 @@ export class EventCard {
   image = input.required<string>();
   date = input<string>(); // optional
 
+  /** initialLike is an input signal that allows the parent component to set the initial liked state of the event.
+   * It is initialized with a default value of false, indicating that the event is not liked by default.
+   */
+  initialLike = input<boolean>(false);
+  /** isFavorite is a derived state that tracks whether the event is liked. 
+   * It is initialized with the value of initialLike input and can be updated based on user interaction.
+   */
+  isFavorite = linkedSignal(() => this.initialLike());
+
+
     // computed allows you to create a derived state that automatically updates when its dependencies change. In this case, we are creating a computed signal that calculates the number of days until the event based on the date input signal.
   daysUntil = computed(() => {
     const eventDate = this.date();
@@ -81,5 +97,10 @@ export class EventCard {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
 });
+
+toggleFavorite() {
+  // This method toggles the isFavorite signal between true and false when the user clicks the like button.
+  this.isFavorite.update((val) => !val);
+}
 
 }
