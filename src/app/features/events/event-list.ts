@@ -18,7 +18,8 @@ import { EventCard } from './event-card';
        <!-- from this parent component we are passing image and date value to app-event-card -->
       <app-event-card title = "Angular Keynote" 
       image="/images/angular-keynote.png" 
-      date="2024-06-15" />
+      date="2024-06-15"
+       />
 
       <app-event-card title = "Signals Deep Dive" 
       image="/images/signals-deep-dive.png" 
