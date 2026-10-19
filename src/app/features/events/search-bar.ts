@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
+  imports: [FormsModule],
   template: `
     <div class="relative mb-6">
+      <!-- ngModel comes from the FormsModule and tracks the value of the input -->
       <input
+        [(ngModel)]="query"
         placeholder="Search events..."
         class="w-full p-4 pl-12 rounded-lg border border-gray-200 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
       />
@@ -13,5 +17,6 @@ import { Component } from '@angular/core';
   `,
 })
 export class SearchBar {
-  // TODO add model
+  // model creates a writable signal that syncs with parent component state. It is similar to input() but allows two-way binding.
+  query = model('');
 }

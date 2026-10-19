@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { EventCard } from './event-card';
+import { SearchBar } from './search-bar';
 
 @Component({
   selector: 'app-event-list',
-  imports: [EventCard],
+  imports: [EventCard, SearchBar],
   template: `
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-4">Upcoming Events</h1>
-      <!-- TODO Mod 1: Add SearchBar here -->
+      <!-- Add SearchBar here -->
+       <!-- we are binding to searchQuery signal in this parent component. query exists in SearchBar -->
+       <app-search-bar [(query)] = "searchQuery" />
+       <p class="text-gray-500 mt-2">Searching for: {{ searchQuery() }}</p>
     </div>
 
     <!-- TODO Mod 2: Wrap in @if (events.isLoading()) -->
@@ -37,4 +41,5 @@ export class EventList {
   // aliasing console this way allows us to use console logs in the template
   // this is also a common practice to make enums and other static values available in the template
   readonly console = console;
+  searchQuery = signal('');
 }
