@@ -30,7 +30,12 @@ import { EventsService } from '../../core/events.service';
     @if (events.hasValue()) {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (event of events.value(); track event.id) {
-          <app-event-card [title]="event.title" [image]="event.image" [date]="event.date" />
+          <app-event-card
+            [title]="event.title"
+            [image]="event.image"
+            [date]="event.date"
+            (delete)="deleteEvent(event.id)"
+          />
         } @empty {
           <p class="col-span-3 text-center text-gray-500">
             No events found for "{{ searchQuery() }}".
@@ -52,4 +57,16 @@ export class EventList {
    * This creates a live connection: searchQuery -> Http Request -> events.value
    */
   events = this.eventsService.getEventsResource(this.searchQuery);
+
+  deleteEvent(id: string) {
+    this.eventsService.deleteEvent(id).subscribe({
+      next: () => {
+        this.events.reload();
+      },
+      error(err) {
+        console.error('Failed to delete event', err);
+        alert('Failed to delete event. Please try again later.');
+      },
+    });
+  }
 }
